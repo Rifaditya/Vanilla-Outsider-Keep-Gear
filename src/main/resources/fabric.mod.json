@@ -19,6 +19,12 @@
                 "value": "net.vanillaoutsider.keepgear.KeepGear",
                 "adapter": "kotlin"
             }
+        ],
+        "modmenu": [
+            {
+                "value": "net.vanillaoutsider.keepgear.client.KeepGearModMenu",
+                "adapter": "kotlin"
+            }
         ]
     },
     "mixins": [
@@ -30,5 +36,9 @@
         "java": ">=21",
         "fabric-api": "*",
         "fabric-language-kotlin": "*"
+    },
+    "suggests": {
+        "modmenu": "*",
+        "cloth-config": "*"
     }
 }
