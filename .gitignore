@@ -1,0 +1,25 @@
+# Build output
+build/
+bin/
+out/
+
+# Gradle
+.gradle/
+gradle.properties.local
+
+# IDE
+.idea/
+*.iml
+.vscode/
+*.code-workspace
+
+# Kotlin
+.kotlin/
+
+# Logs
+logs/
+*.log
+
+# OS
+.DS_Store
+Thumbs.db
