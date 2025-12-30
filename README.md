@@ -79,6 +79,28 @@ All commands require operator permissions (level 2).
 /keepgear dimension disable minecraft:the_end
 ```
 
+### 🏷️ Tag Support
+
+Use `#` prefix to match item tags instead of specific items:
+
+```
+/keepgear blacklist add #minecraft:swords
+/keepgear whitelist add #c:ores
+```
+
+**Common Vanilla Tags:**
+
+| Tag | Items |
+|-----|-------|
+| `#minecraft:swords` | All swords |
+| `#minecraft:axes` | All axes |
+| `#minecraft:pickaxes` | All pickaxes |
+| `#minecraft:shovels` | All shovels |
+| `#minecraft:hoes` | All hoes |
+| `#minecraft:trimmable_armor` | All trimmable armor |
+
+> **Note:** `#minecraft:weapons` does not exist in vanilla. Use `#minecraft:swords` for swords.
+
 ---
 
 ## 📦 Installation
