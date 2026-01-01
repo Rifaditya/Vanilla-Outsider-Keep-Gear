@@ -16,19 +16,25 @@ This mod is part of the **Vanilla Outsider** collection — mods that enhance va
 
 ## ✨ Features
 
-### 🛡️ Smart Item Keeping
+### 🛡️ Smart Item Keeping (Configurable)
 
-| Item Type | On Death |
-|-----------|----------|
-| **Armor** (helmet, chest, legs, boots) | ✅ Kept |
-| **Tools** (pickaxe, axe, shovel, hoe) | ✅ Kept |
-| **Weapons** (sword, bow, crossbow, trident) | ✅ Kept |
-| **Materials** (cobblestone, diamonds, etc.) | ❌ Dropped |
-| **Consumables** (food, potions) | ❌ Dropped |
+The mod categorizes items to decide what to keep. Each category can be toggled in the config!
+
+| Category | On Death (Default) | Examples |
+|-----------|----------|----------|
+| **Armor** | ✅ Kept | Helmets, Chestplates, Leggings, Boots |
+| **Weapons** | ✅ Kept | Swords, Bows, Crossbows, Tridents, Mace |
+| **Tools** | ✅ Kept | Pickaxes, Axes, Shovels, Hoes, Shears, Fishing Rods |
+| **Shields** | ✅ Kept | All Shields |
+| **Elytra** | ✅ Kept | Elytra |
+| **Consumables** | ❌ Dropped | Food, Potions, Stews |
+| **Resources/Misc** | ❌ Dropped | Diamonds, Wood, Cobblestone, Mob Drops |
 
 ### ⚙️ Durability Penalty
 
-- Items kept on death lose **1.2%** of their max durability
+- **Penalty Settings:** Adjust the base percentage and the "Enchantment Weight" (extra penalty per enchantment level).
+- **Echo Shard Resonance:** If you have an **Echo Shard** in your inventory, one is consumed on death to **completely negate** the durability penalty!
+- **Enchantment Weight:** Heavy enchantments weigh on the soul. Each enchantment level increases the durability penalty by **0.1%** (configurable).
 - Prevents death from being consequence-free
 - Configurable percentage
 
@@ -103,7 +109,28 @@ Use `#` prefix to match item tags instead of specific items:
 
 ---
 
-## 📦 Installation
+## Intelligent Integrations
+
+We've built native compatibility with popular mods to ensure a seamless experience.
+
+### 💍 Trinkets Integration
+
+**Optional Integration:** If Trinkets (or a fork like Trinkets Canary) is installed, a new **"Integrations"** category appears in your config.
+
+- **Keep Trinkets Toggle:** You can choose whether to keep your equipped trinkets on death using our logic (checking durability/whitelist).
+- **Unified Logic:** If enabled, trinkets follow the same rules as your main inventory gear (including Echo Shard protection).
+
+> **Compatibility Note:** This mod natively supports both official [Trinkets](https://modrinth.com/mod/trinkets) and forks (like Trinkets Canary) as long as they implement the standard Trinkets API. The integration is **optional** — the mod works perfectly fine without Trinkets installed.
+
+### 🎒 Backpacks Support
+
+- **Standard Rule:** If the backpack item has durability (most do), it is **kept**.
+
+- **Contents:** Items inside the backpack are preserved along with the backpack itself.
+
+---
+
+## �📦 Installation
 
 ### Requirements
 

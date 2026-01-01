@@ -13,10 +13,23 @@ import java.io.File
 data class KeepGearConfig(
     // General
     var enabled: Boolean = true,
+    var keepTrinkets: Boolean = true, // Integration setting
+    var useEchoShard: Boolean = true, // Echo Shard utility
+    
+    // Category Settings (What to keep)
+    var keepArmor: Boolean = true,
+    var keepWeapons: Boolean = true, // Swords, Bows, Crossbows, Tridents
+    var keepTools: Boolean = true,   // Pickaxes, Axes, Shovels, Hoes, Shears, Fishing Rods
+    var keepShields: Boolean = true,
+    var keepElytra: Boolean = true,
+    var keepConsumables: Boolean = false, // Food, Potions
+    var keepResources: Boolean = false,   // Everything else (no durability)
     
     // Durability Penalty
     var penaltyEnabled: Boolean = true,
     var penaltyPercent: Double = 1.2,
+    var enchantmentPenaltyEnabled: Boolean = true,
+    var enchantmentPenaltyValue: Double = 0.1, // Percent per level
     
     // XP Handling
     var xpEnabled: Boolean = true,

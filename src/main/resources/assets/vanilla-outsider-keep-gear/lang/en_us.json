@@ -1,0 +1,11 @@
+{
+    "config.vanilla-outsider-keep-gear.title": "1.21.11 Integration Config",
+    "config.vanilla-outsider-keep-gear.keepTrinkets": "Keep Trinkets",
+    "config.vanilla-outsider-keep-gear.keepTrinkets.tooltip": "If enabled, Trinkets with durability (or whitelisted) are kept on death",
+    "config.vanilla-outsider-keep-gear.useEchoShard": "Use Echo Shard Recovery",
+    "config.vanilla-outsider-keep-gear.useEchoShard.tooltip": "Consumes 1 Echo Shard on death to negate the durability penalty",
+    "config.vanilla-outsider-keep-gear.enchantmentPenaltyEnabled": "Enchantment Weight",
+    "config.vanilla-outsider-keep-gear.enchantmentPenaltyEnabled.tooltip": "If enabled, higher level enchantments increase the durability penalty",
+    "config.vanilla-outsider-keep-gear.enchantmentPenaltyValue": "Weight per Level (%)",
+    "config.vanilla-outsider-keep-gear.enchantmentPenaltyValue.tooltip": "Additional penalty percentage per total enchantment levels"
+}

@@ -16,35 +16,29 @@ This mod changes what happens when a player dies. **Items with durability are ke
 >
 > If an item has no durability → **DROP IT**
 
-### 🔌 Automatic Mod Compatibility
+### 🔌 Intelligent Identification
 
-Because we check for the **durability DataComponent** (not a hardcoded list), this mod automatically works with **ALL modded gear** — any mod that adds tools, weapons, or armor with durability will be protected on death. No config needed!
-
----
-
-## ✅ Items That Will Be KEPT (Have Durability)
-
-| Category | Items |
-|----------|-------|
-| **Armor** | Helmet, Chestplate, Leggings, Boots (all materials) |
-| **Melee Weapons** | Sword, Axe, Mace |
-| **Ranged Weapons** | Bow, Crossbow, Trident, Spear (1.21.11) |
-| **Tools** | Pickaxe, Shovel, Hoe |
-| **Shields** | Shield |
-| **Special** | Elytra, Fishing Rod, Shears, Flint & Steel, Carrot on a Stick, Warped Fungus on a Stick, Brush |
+While we still respect the **durability DataComponent**, the mod now uses **String-based Registry ID matching** and **Item Class checks** for categorizing items. This ensures maximum compatibility with modded items while providing granular control. For example, any item with "sword" in its ID is automatically treated as a weapon.
 
 ---
 
-## ❌ Items That Will Be DROPPED (No Durability)
+---
 
-| Category | Items |
-|----------|-------|
-| **Resources** | Ores, Ingots, Gems, Raw materials |
-| **Blocks** | Cobblestone, Wood, Dirt, etc. |
-| **Food** | All food items |
-| **Mob Drops** | Leather, Bones, String, Ender Pearls, etc. |
-| **Consumables** | Potions, Arrows, Fireworks, Totems |
-| **Misc** | Books, Maps, Compasses (no durability), Buckets |
+## ⚙️ Granular Category Control
+
+You can now toggle exactly which types of items are kept. These settings are found under the **"Item Categories"** section in the config.
+
+| Category | On Death (Default) | Logic / Examples |
+|----------|-------|----------|
+| **Armor** | ✅ Kept | Helmets, Chestplates, Leggings, Boots |
+| **Weapons** | ✅ Kept | Swords, Bows, Crossbows, Tridents, Mace |
+| **Tools** | ✅ Kept | Pickaxes, Axes, Shovels, Hoes, Shears, Fishing Rods |
+| **Shields** | ✅ Kept | All Shields |
+| **Elytra** | ✅ Kept | Elytra |
+| **Consumables**| ❌ Dropped | Food, Potions, Stews (Items with Food component) |
+| **Resources/Misc** | ❌ Dropped | Diamonds, Wood, Cobblestone, etc. |
+
+> **Note:** If an item doesn't fit a specific category but has durability, it defaults to the **Tools** setting.
 
 ---
 
@@ -57,7 +51,7 @@ Because we check for the **durability DataComponent** (not a hardcoded list), th
 | **Mending** | ✅ Item kept (has durability) |
 | **Unbreaking** | ✅ Item kept (has durability) |
 
-> **Clarification:** Enchantments don't change the keep/drop logic — only **durability** matters. Curse of Vanishing is the exception (vanilla mechanic).
+> **Clarification:** While durability is the primary indicator, **Category Toggles** now allow you to override behavior (e.g., set Armor to drop while keeping Tools).
 
 ---
 
@@ -109,24 +103,43 @@ When a player dies and respawns with their gear, each kept item takes a **durabi
 |---------|---------|-------------|
 | **Penalty Enabled** | `true` | Toggle durability penalty on/off (on by default) |
 | **Penalty Amount** | `1.2%` | Percentage of max durability lost on death (by default) |
-| **Configurable** | `true` | Modpack creators can adjust this value |
+| **Echo Shard Save**| `Enabled`| Consumes 1 Echo Shard to negate penalty entirely |
+| **Enchantment Penalty** | `Enabled` | Toggles extra penalty for enchantments |
+| **Enchantment Weight** | `0.1%` | Extra penalty per total enchantment level |
+| **Configurable** | `true` | Modpack creators can adjust these values |
 
-### How It Works
+### Durability Formula
+
+The penalty is calculated per item using the following formula:
+
+```
+Total Penalty % = Base Penalty % + (Sum of Enchantment Levels * Weight Factor %)
+```
+
+**Example:**
+
+- Base Penalty: `1.2%`
+- Weight Factor: `0.1%`
+- Item: Diamond Sword (Unbreaking III, Sharpness V)
+- Total Levels: 3 + 5 = 8
+- Calculation: `1.2% + (8 * 0.1%)` = `2.0%` Durability Loss
 
 - On death, each kept item loses **1.2% of its maximum durability**
 - Example: Diamond Pickaxe (1561 durability) loses ~19 durability per death
 - Example: Netherite Sword (2031 durability) loses ~24 durability per death
 - Items at 0 durability will **break** (not kept if already broken)
 
-### Example Config
+### 💎 Echo Shard Resonance (Lore friendly)
+
+If the player has an **Echo Shard** in their inventory, it will be consumed to act as a "death buffer".
+
+- **Cost:** 1 Echo Shard per death.
+- **Benefit:** All items kept by the mod (including Trinkets) take **0% durability damage**.
+- **Priority:** The shard is consumed *before* any durability penalty is calculated.
 
 ```json
 {
-  "enabled": true,
-  "durabilityPenalty": {
-    "enabled": true,
-    "percentage": 1.2
-  }
+  "useEchoShard": true
 }
 ```
 
@@ -584,34 +597,18 @@ All visual/audio feedback is **off by default** but fully configurable.
 
 ## Trinkets Mod Integration
 
-Trinkets has its own `keepTrinketsOnDeath` setting. This mod uses **bidirectional sync** to keep both settings linked.
+The mod natively supports **Trinkets** and **Trinkets Canary**. This integration is optional and robust (won't crash if the mod is missing).
 
-### 🔄 Bidirectional Sync Behavior
+### ⚙️ Integrations Config
 
-Both settings act as **one unified toggle** — changing one automatically changes the other:
+When Trinkets is installed, an **"Integrations"** category appears in the config menu.
 
-| Action | Result |
-|--------|--------|
-| **Game loads** | This mod is ON by default → Forces Trinkets to ON |
-| **Player toggles THIS mod OFF** | Trinkets setting automatically turns OFF |
-| **Player toggles THIS mod ON** | Trinkets setting automatically turns ON |
-| **Player toggles Trinkets OFF** | This mod setting automatically turns OFF |
-| **Player toggles Trinkets ON** | This mod setting automatically turns ON |
+| Setting | Default | Description |
+|---------|---------|-------------|
+| **Keep Trinkets** | `true` | When enabled, equipped trinkets follow the same keep/drop rules as your main inventory. |
 
-### Why Bidirectional Sync?
-
-- **Unified experience:** Player only needs to toggle one setting
-- **No confusion:** Both mods always behave the same way
-- **Works from either Mod Menu:** Change from Keep Gear or Trinkets config, both update
-
-### State Table
-
-| Keep Gear | Trinkets | Result |
-|-----------|----------|--------|
-| ON | ON (synced) | ✅ All gear + trinkets with durability kept |
-| OFF | OFF (synced) | ❌ Everything drops (vanilla behavior) |
-
-> **Note:** The settings cannot be in different states — they are always synced.
+- **State Check:** The mod checks if Trinkets is loaded at runtime.
+- **Unified Rules:** Trinkets kept by this mod will also incur the **Durability Penalty** if applicable.
 
 ## Backpacks Mod Support
 

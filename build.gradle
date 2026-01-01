@@ -15,6 +15,7 @@ repositories {
 	// Add repositories to retrieve artifacts from in here.
 	maven { url "https://maven.shedaniel.me/" }
 	maven { url "https://maven.terraformersmc.com/" }
+	maven { url "https://maven.ladysnake.org/releases" }
 }
 
 loom {
@@ -43,6 +44,10 @@ dependencies {
 	
 	// Cloth Config for config screen
 	modImplementation "me.shedaniel.cloth:cloth-config-fabric:17.0.144"
+
+	// Trinkets (Optional) - Use compileOnly for optional dep, runOnly for testing
+	modCompileOnly "dev.emi:trinkets:3.10.0" 
+
 }
 
 processResources {

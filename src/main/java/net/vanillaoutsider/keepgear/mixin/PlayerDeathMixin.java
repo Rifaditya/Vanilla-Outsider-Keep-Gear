@@ -12,6 +12,7 @@ import net.vanillaoutsider.keepgear.KeepGear;
 import net.vanillaoutsider.keepgear.config.ConfigManager;
 import net.vanillaoutsider.keepgear.util.DeathTypeUtils;
 import net.vanillaoutsider.keepgear.util.ItemUtils;
+import net.minecraft.world.item.Items;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
@@ -20,6 +21,8 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 import java.util.HashMap;
 import java.util.Map;
+import net.fabricmc.loader.api.FabricLoader;
+import net.vanillaoutsider.keepgear.integration.TrinketsIntegration;
 
 /**
  * Mixin to intercept player death and handle inventory preservation.
@@ -54,7 +57,24 @@ public abstract class PlayerDeathMixin {
 
         var config = ConfigManager.INSTANCE.getConfig();
         Inventory inventory = player.getInventory();
-        double penalty = config.getPenaltyEnabled() ? config.getPenaltyPercent() : 0.0;
+        boolean isPenaltyNegated = false;
+
+        // --- ECHO SHARD LOGIC ---
+        // If player has Echo Shard, consume it to negate penalty
+        if (config.getUseEchoShard()) {
+            for (int i = 0; i < inventory.getContainerSize(); i++) {
+                ItemStack stack = inventory.getItem(i);
+                if (!stack.isEmpty() && stack.is(Items.ECHO_SHARD)) {
+                    stack.shrink(1);
+                    isPenaltyNegated = true;
+                    KeepGear.INSTANCE.getLogger().info(
+                            "Echo Shard resonance detected! Preserving gear durability for {}",
+                            player.getName().getString());
+                    break;
+                }
+            }
+        }
+        // ------------------------
 
         // Process all inventory slots (including armor and offhand)
         // Slot layout: 0-8 hotbar, 9-35 main inv, 36-39 armor, 40 offhand
@@ -69,9 +89,14 @@ public abstract class PlayerDeathMixin {
                     continue; // Let it vanish
                 }
 
-                // Apply durability penalty
-                if (penalty > 0 && ItemUtils.INSTANCE.hasDurability(stack)) {
-                    boolean survived = ItemUtils.INSTANCE.applyPenalty(stack, penalty);
+                // Apply durability penalty (Dynamic per item)
+                double itemPenalty = 0.0;
+                if (!isPenaltyNegated) {
+                    itemPenalty = ItemUtils.INSTANCE.calculateTotalPenalty(stack, config);
+                }
+
+                if (itemPenalty > 0 && ItemUtils.INSTANCE.hasDurability(stack)) {
+                    boolean survived = ItemUtils.INSTANCE.applyPenalty(stack, itemPenalty);
                     if (!survived) {
                         continue; // Item broke from penalty
                     }
@@ -92,6 +117,13 @@ public abstract class PlayerDeathMixin {
 
         KeepGear.INSTANCE.getLogger().debug("Saved {} items and {} XP for {}",
                 keepgear$savedItems.size(), keepgear$savedXp, player.getName().getString());
+
+        // Handle Trinkets integration
+        // If penalty is negated, pass 0.0. If not, pass null to let integration
+        // calculate dynamic penalty.
+        if (FabricLoader.getInstance().isModLoaded("trinkets")) {
+            TrinketsIntegration.INSTANCE.onDeath(player, isPenaltyNegated ? 0.0 : null);
+        }
     }
 
     /**
@@ -144,6 +176,11 @@ public abstract class PlayerDeathMixin {
 
         KeepGear.INSTANCE.getLogger().debug("Restored {} items and {} XP for {}",
                 savedItems.size(), savedXp, player.getName().getString());
+
+        // Handle Trinkets integration
+        if (FabricLoader.getInstance().isModLoaded("trinkets")) {
+            TrinketsIntegration.INSTANCE.onRespawn(player);
+        }
 
         // Clear saved data
         savedItems.clear();

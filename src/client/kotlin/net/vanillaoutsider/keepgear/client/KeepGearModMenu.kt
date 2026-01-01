@@ -35,6 +35,76 @@ class KeepGearModMenu : ModMenuApi {
                 .setSaveConsumer { config.enabled = it }
                 .build()
         )
+
+        // Integrations category
+        val integrations = builder.getOrCreateCategory(Component.literal("Integrations"))
+
+        integrations.addEntry(
+            entryBuilder.startBooleanToggle(Component.translatable("config.vanilla-outsider-keep-gear.keepTrinkets"), config.keepTrinkets)
+                .setDefaultValue(true)
+                .setTooltip(Component.translatable("config.vanilla-outsider-keep-gear.keepTrinkets.tooltip"))
+                .setSaveConsumer { config.keepTrinkets = it }
+                .build()
+        )
+
+        // Item Categories
+        val categories = builder.getOrCreateCategory(Component.literal("Item Categories"))
+        
+        categories.addEntry(
+            entryBuilder.startBooleanToggle(Component.literal("Keep Armor"), config.keepArmor)
+                .setDefaultValue(true)
+                .setTooltip(Component.literal("Helmets, Chestplates, Leggings, Boots"))
+                .setSaveConsumer { config.keepArmor = it }
+                .build()
+        )
+        
+        categories.addEntry(
+            entryBuilder.startBooleanToggle(Component.literal("Keep Weapons"), config.keepWeapons)
+                .setDefaultValue(true)
+                .setTooltip(Component.literal("Swords, Bows, Crossbows, Tridents, Maces"))
+                .setSaveConsumer { config.keepWeapons = it }
+                .build()
+        )
+        
+        categories.addEntry(
+            entryBuilder.startBooleanToggle(Component.literal("Keep Tools"), config.keepTools)
+                .setDefaultValue(true)
+                .setTooltip(Component.literal("Pickaxes, Axes, Shovels, Hoes, Shears, Fishing Rods"))
+                .setSaveConsumer { config.keepTools = it }
+                .build()
+        )
+        
+        categories.addEntry(
+            entryBuilder.startBooleanToggle(Component.literal("Keep Shields"), config.keepShields)
+                .setDefaultValue(true)
+                .setTooltip(Component.literal("Shields"))
+                .setSaveConsumer { config.keepShields = it }
+                .build()
+        )
+        
+        categories.addEntry(
+            entryBuilder.startBooleanToggle(Component.literal("Keep Elytra"), config.keepElytra)
+                .setDefaultValue(true)
+                .setTooltip(Component.literal("Elytra"))
+                .setSaveConsumer { config.keepElytra = it }
+                .build()
+        )
+        
+        categories.addEntry(
+            entryBuilder.startBooleanToggle(Component.literal("Keep Consumables"), config.keepConsumables)
+                .setDefaultValue(false)
+                .setTooltip(Component.literal("Food, Potions (Items with Food component)"))
+                .setSaveConsumer { config.keepConsumables = it }
+                .build()
+        )
+        
+        categories.addEntry(
+            entryBuilder.startBooleanToggle(Component.literal("Keep Resources/Misc"), config.keepResources)
+                .setDefaultValue(false)
+                .setTooltip(Component.literal("Everything else without durability (Materials, Blocks)"))
+                .setSaveConsumer { config.keepResources = it }
+                .build()
+        )
         
         // Penalty settings
         val penalty = builder.getOrCreateCategory(Component.literal("Durability Penalty"))
@@ -46,6 +116,14 @@ class KeepGearModMenu : ModMenuApi {
                 .setSaveConsumer { config.penaltyEnabled = it }
                 .build()
         )
+
+        penalty.addEntry(
+            entryBuilder.startBooleanToggle(Component.translatable("config.vanilla-outsider-keep-gear.useEchoShard"), config.useEchoShard)
+                .setDefaultValue(true)
+                .setTooltip(Component.translatable("config.vanilla-outsider-keep-gear.useEchoShard.tooltip"))
+                .setSaveConsumer { config.useEchoShard = it }
+                .build()
+        )
         
         penalty.addEntry(
             entryBuilder.startDoubleField(Component.literal("Penalty Percent"), config.penaltyPercent)
@@ -54,6 +132,24 @@ class KeepGearModMenu : ModMenuApi {
                 .setMax(100.0)
                 .setTooltip(Component.literal("Percent of max durability lost on death"))
                 .setSaveConsumer { config.penaltyPercent = it }
+                .build()
+        )
+
+        penalty.addEntry(
+            entryBuilder.startBooleanToggle(Component.translatable("config.vanilla-outsider-keep-gear.enchantmentPenaltyEnabled"), config.enchantmentPenaltyEnabled)
+                .setDefaultValue(true)
+                .setTooltip(Component.translatable("config.vanilla-outsider-keep-gear.enchantmentPenaltyEnabled.tooltip"))
+                .setSaveConsumer { config.enchantmentPenaltyEnabled = it }
+                .build()
+        )
+
+        penalty.addEntry(
+            entryBuilder.startDoubleField(Component.translatable("config.vanilla-outsider-keep-gear.enchantmentPenaltyValue"), config.enchantmentPenaltyValue)
+                .setDefaultValue(0.1)
+                .setMin(0.0)
+                .setMax(1.0)
+                .setTooltip(Component.translatable("config.vanilla-outsider-keep-gear.enchantmentPenaltyValue.tooltip"))
+                .setSaveConsumer { config.enchantmentPenaltyValue = it }
                 .build()
         )
         
