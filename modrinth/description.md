@@ -24,6 +24,8 @@ Do you hate losing your enchanted Netherite sword in lava, but feel like `/gamer
 
 The mod automatically scans your inventory on death. No manual whitelists needed—it just works, even with modded items!
 
+* **Tag Support:** Now uses standard **Item Tags** (`#swords`, `#pickaxes`) for maximum compatibility with other mods (e.g. Katanas, Hammers).
+
 | Icon | Category | Action (Default) | Examples |
 | :---: | :--- | :--- | :--- |
 | 🛡️ | **Armor** | **KEPT** | Helmets, Chestplates, Leggings, Boots |
@@ -42,7 +44,9 @@ The mod automatically scans your inventory on death. No manual whitelists needed
 Dying shouldn't be free. To balance the convenience of keeping your gear, you pay a price:
 
 * **Durability Cost:** All preserved items lose **1.2%** (configurable) of their max durability.
+* **Additive Math:** Penalties are added to existing damage. (`Current Damage + Penalty = New Damage`).
 * **Enchantment Weight:** Heavy magic comes with a cost. Each enchantment level adds **0.1%** (configurable) to the penalty.
+* **Container Support:** Keep **Backpacks, Shulkers, and Bundles**! Configure them to keep their contents safe or spill them on the ground.
 * **Echo Shard Utility:** Carrying an **Echo Shard** consumes it on death to **completely bypass** the durability penalty.
 * **XP Tax:** You keep **20%** (configurable) of your XP. The rest drops as orbs or is lost, depending on your settings.
 

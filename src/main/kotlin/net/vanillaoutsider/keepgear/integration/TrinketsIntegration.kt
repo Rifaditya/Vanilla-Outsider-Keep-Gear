@@ -2,6 +2,7 @@ package net.vanillaoutsider.keepgear.integration
 
 import dev.emi.trinkets.api.TrinketsApi
 import net.minecraft.server.level.ServerPlayer
+import net.minecraft.world.damagesource.DamageSource
 import net.minecraft.world.item.ItemStack
 import net.vanillaoutsider.keepgear.KeepGear
 import net.vanillaoutsider.keepgear.config.ConfigManager
@@ -23,7 +24,7 @@ object TrinketsIntegration {
      * Scans trinket slots, keeps items with durability (or whitelisted),
      * and clears them from inventory so Trinkets doesn't drop them.
      */
-    fun onDeath(player: ServerPlayer, overridePenalty: Double? = null) {
+    fun onDeath(player: ServerPlayer, source: DamageSource?, overridePenalty: Double? = null) {
         savedTrinkets.clear()
         
         // Check if integration is enabled in config
@@ -48,7 +49,7 @@ object TrinketsIntegration {
                     
                     // Apply Penalty
                     if (ItemUtils.hasDurability(stack)) {
-                        val itemPenalty = overridePenalty ?: ItemUtils.calculateTotalPenalty(stack, config)
+                        val itemPenalty = overridePenalty ?: ItemUtils.calculateTotalPenalty(stack, config, source)
                         if (itemPenalty > 0) {
                             val survived = ItemUtils.applyPenalty(stack, itemPenalty)
                             if (!survived) {

@@ -64,6 +64,16 @@ The cost of cheating death.
 | **Weight per Level** | `0.1%` | Additional penalty % per level of enchantment. <br> *Example:* A Sword with Sharpness V, Unbreaking III (Level 8) adds `0.8%` to the base penalty. |
 | **Use Echo Shard** | `true` | If you have an `echo_shard` in your inventory, it is **consumed** on death and your items take **0** damage. |
 
+### 🧮 Penalty Math
+
+Durability penalties are **additive**. They increase the existing damage on your item.
+
+* **Formula:** `New Damage = Current Damage + (Max Durability * Penalty%)`
+* **Example:**
+  * Item has `90/100` durability (Current Damage = 10).
+  * Penalty is `10%` (Damage +10).
+  * **Result:** `10 + 10 = 20` Damage. Item drops to `80/100` durability.
+
 ---
 
 ## ✨ Experience (XP)

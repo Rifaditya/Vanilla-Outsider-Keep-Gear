@@ -91,8 +91,20 @@ public abstract class PlayerDeathMixin {
 
                 // Apply durability penalty (Dynamic per item)
                 double itemPenalty = 0.0;
-                if (!isPenaltyNegated) {
-                    itemPenalty = ItemUtils.INSTANCE.calculateTotalPenalty(stack, config);
+                if (isPenaltyNegated) {
+                    // Do nothing, penalty skipped
+                } else {
+                    // Check for Container Drop Contents logic
+                    if (config.getContainerDropContents() && ItemUtils.INSTANCE.isContainer(stack)) {
+                        java.util.List<ItemStack> contentsToDrop = ItemUtils.INSTANCE.processContainerDrop(stack);
+                        for (ItemStack contentItem : contentsToDrop) {
+                            // drop(itemStack, boolean throwRandomly, boolean retainOwnership)
+                            player.drop(contentItem, true, false);
+                        }
+                    }
+
+                    // Apply Durability Penalty (unless negated)
+                    itemPenalty = ItemUtils.INSTANCE.calculateTotalPenalty(stack, config, source);
                 }
 
                 if (itemPenalty > 0 && ItemUtils.INSTANCE.hasDurability(stack)) {
@@ -111,7 +123,7 @@ public abstract class PlayerDeathMixin {
         // Handle XP retention
         if (config.getXpEnabled()) {
             int totalXp = player.totalExperience;
-            int keepPercent = config.getXpPercent();
+            double keepPercent = ItemUtils.INSTANCE.calculateXpRetention(config, source);
             keepgear$savedXp = (int) (totalXp * keepPercent / 100.0);
         }
 
@@ -122,7 +134,7 @@ public abstract class PlayerDeathMixin {
         // If penalty is negated, pass 0.0. If not, pass null to let integration
         // calculate dynamic penalty.
         if (FabricLoader.getInstance().isModLoaded("trinkets")) {
-            TrinketsIntegration.INSTANCE.onDeath(player, isPenaltyNegated ? 0.0 : null);
+            TrinketsIntegration.INSTANCE.onDeath(player, source, isPenaltyNegated ? 0.0 : null);
         }
     }
 

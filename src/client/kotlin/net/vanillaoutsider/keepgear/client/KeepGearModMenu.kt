@@ -106,6 +106,55 @@ class KeepGearModMenu : ModMenuApi {
                 .build()
         )
         
+        categories.addEntry(
+            entryBuilder.startBooleanToggle(Component.translatable("config.vanilla-outsider-keep-gear.keepContainers"), config.keepContainers)
+                .setDefaultValue(false)
+                .setTooltip(Component.translatable("config.vanilla-outsider-keep-gear.keepContainers.tooltip"))
+                .setSaveConsumer { config.keepContainers = it }
+                .build()
+        )
+
+        categories.addEntry(
+            entryBuilder.startBooleanToggle(Component.translatable("config.vanilla-outsider-keep-gear.containerDropContents"), config.containerDropContents)
+                .setDefaultValue(false)
+                .setTooltip(Component.translatable("config.vanilla-outsider-keep-gear.containerDropContents.tooltip"))
+                .setSaveConsumer { config.containerDropContents = it }
+                .build()
+        )
+        
+        categories.addEntry(
+            entryBuilder.startStrList(Component.literal("Container Whitelist"), config.containerWhitelist)
+                .setDefaultValue(
+                    listOf(
+                        "travelersbackpack:*",
+                        "backpacks:backpack",
+                        "backpacks:backpack_tier_*",
+                        "minecraft:shulker_box",
+                        "minecraft:white_shulker_box",
+                        "minecraft:orange_shulker_box",
+                        "minecraft:magenta_shulker_box",
+                        "minecraft:light_blue_shulker_box",
+                        "minecraft:yellow_shulker_box",
+                        "minecraft:lime_shulker_box",
+                        "minecraft:pink_shulker_box",
+                        "minecraft:gray_shulker_box",
+                        "minecraft:light_gray_shulker_box",
+                        "minecraft:cyan_shulker_box",
+                        "minecraft:purple_shulker_box",
+                        "minecraft:blue_shulker_box",
+                        "minecraft:brown_shulker_box",
+                        "minecraft:green_shulker_box",
+                        "minecraft:red_shulker_box",
+                        "minecraft:black_shulker_box",
+                        "minecraft:bundle",
+                        "minecraft:*_bundle"
+                    )
+                )
+                .setTooltip(Component.literal("IDs of containers to keep (supports wildcards)"))
+                .setSaveConsumer { config.containerWhitelist = it.toMutableList() }
+                .build()
+        )
+        
         // Penalty settings
         val penalty = builder.getOrCreateCategory(Component.literal("Durability Penalty"))
         
@@ -219,6 +268,118 @@ class KeepGearModMenu : ModMenuApi {
                 .setSaveConsumer { config.pvpDeath = it }
                 .build()
         )
+
+        // Advanced Penalties
+        val advanced = builder.getOrCreateCategory(Component.translatable("config.vanilla-outsider-keep-gear.advanced"))
+        
+        advanced.addEntry(
+            entryBuilder.startBooleanToggle(Component.translatable("config.vanilla-outsider-keep-gear.dropBindingCurse"), config.dropBindingCurse)
+                .setDefaultValue(false)
+                .setTooltip(Component.translatable("config.vanilla-outsider-keep-gear.dropBindingCurse.tooltip"))
+                .setSaveConsumer { config.dropBindingCurse = it }
+                .build()
+        )
+
+        advanced.addEntry(
+             entryBuilder.startStrList(Component.translatable("config.vanilla-outsider-keep-gear.customMap"), config.customDeathPenalties)
+                 .setDefaultValue(listOf())
+                 .setTooltip(Component.translatable("config.vanilla-outsider-keep-gear.customMap.tooltip"))
+                 .setSaveConsumer { config.customDeathPenalties = it.toMutableList() }
+                 .build()
+        )
+        
+        // Lava
+        advanced.addEntry(entryBuilder.startTextDescription(Component.translatable("config.vanilla-outsider-keep-gear.lavaPenaltyEnabled")).build())
+        advanced.addEntry(
+            entryBuilder.startBooleanToggle(Component.literal("Enable Lava Penalty"), config.lavaPenaltyEnabled)
+                .setDefaultValue(false)
+                .setSaveConsumer { config.lavaPenaltyEnabled = it }
+                .build()
+        )
+        advanced.addEntry(
+            entryBuilder.startDoubleField(Component.translatable("config.vanilla-outsider-keep-gear.lavaPenaltyValue"), config.lavaPenaltyValue)
+                .setDefaultValue(5.0)
+                .setMin(0.0).setMax(100.0)
+                .setSaveConsumer { config.lavaPenaltyValue = it }
+                .build()
+        )
+        advanced.addEntry(
+            entryBuilder.startDoubleField(Component.translatable("config.vanilla-outsider-keep-gear.lavaXpRetention"), config.lavaXpRetention)
+                .setDefaultValue(0.0)
+                .setMin(0.0).setMax(100.0)
+                .setSaveConsumer { config.lavaXpRetention = it }
+                .build()
+        )
+        
+        // Fall
+        advanced.addEntry(entryBuilder.startTextDescription(Component.translatable("config.vanilla-outsider-keep-gear.fallPenaltyEnabled")).build())
+        advanced.addEntry(
+            entryBuilder.startBooleanToggle(Component.literal("Enable Fall Penalty"), config.fallPenaltyEnabled)
+                .setDefaultValue(false)
+                .setSaveConsumer { config.fallPenaltyEnabled = it }
+                .build()
+        )
+        advanced.addEntry(
+            entryBuilder.startDoubleField(Component.translatable("config.vanilla-outsider-keep-gear.fallPenaltyValue"), config.fallPenaltyValue)
+                .setDefaultValue(5.0)
+                .setMin(0.0).setMax(100.0)
+                .setSaveConsumer { config.fallPenaltyValue = it }
+                .build()
+        )
+        advanced.addEntry(
+            entryBuilder.startDoubleField(Component.translatable("config.vanilla-outsider-keep-gear.fallXpRetention"), config.fallXpRetention)
+                .setDefaultValue(20.0)
+                .setMin(0.0).setMax(100.0)
+                .setSaveConsumer { config.fallXpRetention = it }
+                .build()
+        )
+
+        // Explosion
+        advanced.addEntry(entryBuilder.startTextDescription(Component.translatable("config.vanilla-outsider-keep-gear.explosionPenaltyEnabled")).build())
+        advanced.addEntry(
+            entryBuilder.startBooleanToggle(Component.literal("Enable Explosion Penalty"), config.explosionPenaltyEnabled)
+                .setDefaultValue(false)
+                .setSaveConsumer { config.explosionPenaltyEnabled = it }
+                .build()
+        )
+        advanced.addEntry(
+            entryBuilder.startDoubleField(Component.translatable("config.vanilla-outsider-keep-gear.explosionPenaltyValue"), config.explosionPenaltyValue)
+                .setDefaultValue(10.0)
+                .setMin(0.0).setMax(100.0)
+                .setSaveConsumer { config.explosionPenaltyValue = it }
+                .build()
+        )
+        advanced.addEntry(
+            entryBuilder.startDoubleField(Component.translatable("config.vanilla-outsider-keep-gear.explosionXpRetention"), config.explosionXpRetention)
+                .setDefaultValue(0.0)
+                .setMin(0.0).setMax(100.0)
+                .setSaveConsumer { config.explosionXpRetention = it }
+                .build()
+        )
+        
+        // Void
+        advanced.addEntry(entryBuilder.startTextDescription(Component.translatable("config.vanilla-outsider-keep-gear.voidPenaltyEnabled")).build())
+        advanced.addEntry(
+            entryBuilder.startBooleanToggle(Component.literal("Enable Void Penalty"), config.voidPenaltyEnabled)
+                .setDefaultValue(false)
+                .setSaveConsumer { config.voidPenaltyEnabled = it }
+                .build()
+        )
+        advanced.addEntry(
+            entryBuilder.startDoubleField(Component.translatable("config.vanilla-outsider-keep-gear.voidPenaltyValue"), config.voidPenaltyValue)
+                .setDefaultValue(100.0)
+                .setMin(0.0).setMax(100.0)
+                .setSaveConsumer { config.voidPenaltyValue = it }
+                .build()
+        )
+        advanced.addEntry(
+            entryBuilder.startDoubleField(Component.translatable("config.vanilla-outsider-keep-gear.voidXpRetention"), config.voidXpRetention)
+                .setDefaultValue(0.0)
+                .setMin(0.0).setMax(100.0)
+                .setSaveConsumer { config.voidXpRetention = it }
+                .build()
+        )
+
         
         return builder.build()
     }
