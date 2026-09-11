@@ -2,6 +2,26 @@
 
 All notable changes to **Vanilla Outsider: Keep Gear** will be documented in this file.
 
+## [1.2.4+26.3]
+### Added
+- Complete in-game Brigadier command suite `/keepgear` (`status`, `help`, `set <property> <value>`, `reset`, `reload`) with permission gating (`Commands.LEVEL_GAMEMASTERS`).
+- Reflection-safe optional Trinkets compatibility module (`TrinketsCompat`) preserving equipped accessories across deaths without compile-time hard dependencies.
+- Registered `/keepgear` command tree to `CommandRegistrationCallback`.
+
+## [1.2.3+26.3]
+### Added
+- Player death item interception via `PlayerDropEquipmentMixin` cancelling vanilla drop pipeline for preserved equipment.
+- Sided respawn equipment restoration via `ServerPlayerRespawnMixin` with equipment conflict safety fallback (equipped -> inventory -> safe ground drop).
+- Instant post-respawn XP HUD synchronization packet dispatch (`ClientboundSetExperiencePacket`).
+- Visual and audio respawn feedback with configurable particle effects and chime audio cues.
+
+## [1.2.2+26.3]
+### Added
+- High-fidelity `ItemPreservationEngine` with 100% granular classification (armor, weapons, tools, shields, elytra, consumables, resources, containers).
+- Minecraft 26.3 DataComponents durability degradation penalty (`DataComponents.DAMAGE` & `DataComponents.MAX_DAMAGE`) with permanent breakage on lethal wear.
+- Curse of Vanishing / Curse of Binding enforcement.
+- Echo Shard insurance mechanic consuming shard from inventory to grant 100% item safety and bypass degradation.
+
 ## [1.2.1+26.3]
 ### Added
 - Pure Java 25 configuration data model `KeepGearConfig` supporting 100% toggleable mechanics across all categories and death rules.

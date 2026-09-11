@@ -66,4 +66,9 @@ public final class ConfigManager {
     public static void reload() {
         load();
     }
+
+    public static void resetToDefaults() {
+        config = new KeepGearConfig();
+        save();
+    }
 }
