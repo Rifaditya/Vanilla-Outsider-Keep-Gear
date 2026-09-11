@@ -16,4 +16,8 @@ public final class KeepGear implements ModInitializer {
         ConfigManager.load();
         LOGGER.info("Vanilla Outsider: Keep Gear 26.3 initialized!");
     }
+
+    public static net.vanillaoutsider.keepgear.config.KeepGearConfig getConfig() {
+        return ConfigManager.getConfig();
+    }
 }
