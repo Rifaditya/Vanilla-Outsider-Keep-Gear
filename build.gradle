@@ -1,7 +1,6 @@
 plugins {
-	id 'net.fabricmc.fabric-loom-remap' version "${loom_version}"
+	id 'net.fabricmc.fabric-loom' version "${loom_version}"
 	id 'maven-publish'
-	id "org.jetbrains.kotlin.jvm" version "2.3.0"
 }
 
 version = project.mod_version
@@ -12,42 +11,21 @@ base {
 }
 
 repositories {
-	// Add repositories to retrieve artifacts from in here.
-	maven { url "https://maven.shedaniel.me/" }
-	maven { url "https://maven.terraformersmc.com/" }
-	maven { url "https://maven.ladysnake.org/releases" }
-}
-
-loom {
-	splitEnvironmentSourceSets()
-
-	mods {
-		"vanilla-outsider-keep-gear" {
-			sourceSet sourceSets.main
-			sourceSet sourceSets.client
-		}
-	}
+	mavenLocal()
+	maven { url = "https://maven.fabricmc.net/" }
+	maven { url = "https://maven.terraformersmc.com/" }
+	maven { url = "https://maven.isxander.dev/releases" }
+	mavenCentral()
 }
 
 dependencies {
-	// To change the versions see the gradle.properties file
 	minecraft "com.mojang:minecraft:${project.minecraft_version}"
-	mappings loom.officialMojangMappings()
-	modImplementation "net.fabricmc:fabric-loader:${project.loader_version}"
+	implementation "net.fabricmc:fabric-loader:${project.fabric_loader_version}"
+	implementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_version}"
 
-	// Fabric API
-	modImplementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_version}"
-	modImplementation "net.fabricmc:fabric-language-kotlin:${project.fabric_kotlin_version}"
-	
-	// Mod Menu integration (optional)
-	modImplementation "com.terraformersmc:modmenu:14.0.0-rc.2"
-	
-	// Cloth Config for config screen
-	modImplementation "me.shedaniel.cloth:cloth-config-fabric:17.0.144"
-
-	// Trinkets (Optional) - Use compileOnly for optional dep, runOnly for testing
-	modCompileOnly "dev.emi:trinkets:3.10.0" 
-
+	// Optional GUI Dependencies (compileOnly: zero runtime bloat, zero server crashes)
+	compileOnly "dev.isxander:yet-another-config-lib:3.9.5+26.2-fabric"
+	compileOnly "com.terraformersmc:modmenu:18.0.0-beta.1"
 }
 
 processResources {
@@ -58,21 +36,21 @@ processResources {
 	}
 }
 
-tasks.withType(JavaCompile).configureEach {
-	it.options.release = 21
-}
-
-tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile).all {
-	kotlinOptions {
-		jvmTarget = 21
+loom {
+	mixin {
+		defaultRefmapName = "vanilla-outsider-keep-gear-refmap.json"
 	}
 }
 
 java {
 	withSourcesJar()
+	toolchain {
+		languageVersion = JavaLanguageVersion.of(25)
+	}
+}
 
-	sourceCompatibility = JavaVersion.VERSION_21
-	targetCompatibility = JavaVersion.VERSION_21
+tasks.withType(JavaCompile).configureEach {
+	it.options.release = 25
 }
 
 jar {
@@ -83,16 +61,55 @@ jar {
 	}
 }
 
-// Configure the maven publication
-publishing {
-	publications {
-		create("mavenJava", MavenPublication) {
-			artifactId = project.archives_base_name
-			from components.java
-		}
-	}
+afterEvaluate {
+	def targetJarTask = tasks.findByName('remapJar') ?: tasks.findByName('jar')
+	if (targetJarTask != null) {
+		def archiveTask = tasks.register('archiveReleaseJar') {
+			group = 'build'
+			description = 'Copies release JAR to local Archive and Central Release Hub'
+			dependsOn targetJarTask
+			doLast {
+				def jarFile = targetJarTask.archiveFile.get().asFile
+				if (jarFile.exists()) {
+					// 1. Mod Local Archive
+					def mcVer = project.findProperty('minecraft_version') ?: ''
+					def localArchiveDir = file(mcVer ? "Archive/MC ${mcVer}" : "Archive")
+					localArchiveDir.mkdirs()
+					copy {
+						from jarFile
+						into localArchiveDir
+					}
+					println "[AUTO-ARCHIVE] Successfully copied ${jarFile.name} to local Archive: ${localArchiveDir.canonicalPath}"
 
-	repositories {
-		// Add repositories to publish to here.
+					// 2. Central Release Hub Archives Sync
+					File hubDir = new File("E:/Minecraft Project/minecraft-mod-release-hub")
+					if (hubDir.exists()) {
+						File hubConfigFile = new File(hubDir, "config/platform_projects.json")
+						if (hubConfigFile.exists()) {
+							try {
+								def hubJson = new groovy.json.JsonSlurper().parse(hubConfigFile)
+								def curPath = projectDir.canonicalPath.replace('\\', '/').toLowerCase()
+								def matchedMod = hubJson.find { name, data ->
+									data.root_dir && curPath.contains(data.root_dir.replace('\\', '/').toLowerCase())
+								}?.key
+								if (matchedMod) {
+									File targetArchiveDir = new File(hubDir, "archives/${matchedMod}")
+									targetArchiveDir.mkdirs()
+									copy {
+										from jarFile
+										into targetArchiveDir
+									}
+									println "[HUB-ARCHIVE] Successfully copied ${jarFile.name} to release hub archives: ${targetArchiveDir.canonicalPath}"
+								}
+							} catch (Exception e) {
+								println "[HUB-ARCHIVE] Note: Could not copy to release hub: ${e.message}"
+							}
+						}
+					}
+				}
+			}
+		}
+		build.finalizedBy(archiveTask)
 	}
 }
+

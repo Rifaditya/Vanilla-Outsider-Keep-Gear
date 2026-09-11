@@ -5,41 +5,38 @@
     "name": "Vanilla Outsider: Keep Gear",
     "description": "Keep your gear on death! Items with durability are preserved, materials drop. Features configurable penalties, blacklists, and custom gamerules.",
     "authors": [
-        "DasikIgaijin"
+        "Dasik (Rifaditya)"
     ],
     "contact": {
         "homepage": "https://github.com/Rifaditya",
-        "sources": "https://github.com/Rifaditya/Vanilla-Outsider-Keep-Gear"
+        "sources": "https://github.com/Rifaditya/Vanilla-Outsider-Keep-Gear",
+        "issues": "https://github.com/Rifaditya/Vanilla-Outsider-Keep-Gear/issues"
     },
-    "license": "GPL-3.0",
+    "license": "GPL-3.0-or-later",
     "environment": "*",
     "entrypoints": {
         "main": [
-            {
-                "value": "net.vanillaoutsider.keepgear.KeepGear",
-                "adapter": "kotlin"
-            }
-        ],
-        "modmenu": [
-            {
-                "value": "net.vanillaoutsider.keepgear.client.KeepGearModMenu",
-                "adapter": "kotlin"
-            }
+            "net.vanillaoutsider.keepgear.KeepGear"
         ]
     },
     "mixins": [
         "vanilla-outsider-keep-gear.mixins.json"
     ],
     "depends": {
-        "fabricloader": ">=0.18.4",
-        "minecraft": "~1.21.11",
-        "java": ">=21",
-        "fabric-api": "*",
-        "fabric-language-kotlin": "*"
+        "fabricloader": ">=0.19.3",
+        "minecraft": ">=26.3-",
+        "java": ">=25",
+        "fabric-api": "*"
     },
     "suggests": {
         "modmenu": "*",
-        "cloth-config": "*",
+        "yet-another-config-lib": "*",
         "trinkets": "*"
+    },
+    "custom": {
+        "modrinth": {
+            "projectId": "keep-gear",
+            "slug": "keep-gear"
+        }
     }
 }
