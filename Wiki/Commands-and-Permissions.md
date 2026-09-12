@@ -1,48 +1,63 @@
-# Commands & Permissions
+# 💻 Commands & Permissions
 
-Manage and debug **Keep Gear** directly from the chat console.
+🌐 **Languages**: [[🇺🇸 English|Home]] | [[🇨🇳 简体中文|zh_cn-Home]] | [[🇭🇰 繁體中文|zh_tw-Home]] | [[🇷🇺 Русский|ru_ru-Home]] | [[🇪🇸 Español|es_es-Home]] | [[🇩🇪 Deutsch|de_de-Home]] | [[🇫🇷 Français|fr_fr-Home]] | [[🇧🇷 Português|pt_br-Home]] | [[🇯🇵 日本語|ja_jp-Home]] | [[🇮🇩 Bahasa Indonesia|id_id-Home]] | [[🇰🇷 한국어|ko_kr-Home]]
 
-> [!IMPORTANT]
-> These commands are intended for Server Admins.
+**Vanilla Outsider: Keep Gear** includes a comprehensive Brigadier command tree registered under `/keepgear`.
 
-## 💻 Commands
+## 🔐 Permission Level Architecture
 
-### General
+The mod adheres to Minecraft's standard 4-tier permission model:
+* **Informational Commands** (`/keepgear`, `/keepgear status`, `/keepgear help`): Available to all players by default (`permission level 0`), allowing players to inspect active death rules.
+* **Administrative Commands** (`set`, `reload`, `reset`): Strictly gated by `Commands.LEVEL_GAMEMASTERS` (`permission level 2`, command blocks and server operators).
 
-* `/keepgear` - Shows the current status of the mod (Enabled/Disabled, lists sizes, etc).
-* `/keepgear help` - Displays a list of available commands.
-* `/keepgear reload` - Reloads the configuration file from disk. Useful for applying changes made to `vanilla-outsider-keep-gear.json5` without restarting the server.
-* `/keepgear status` - Alias for `/keepgear`.
+---
 
-### Lists Management
+## 📜 Command Reference Tree
 
-You can modify the Blacklist and Whitelist in-game. Changes are saved to config immediately.
+### 1. `/keepgear` & `/keepgear status`
+Prints a formatted, color-coded dashboard of the active mod configuration in chat.
+* **Syntax**: `/keepgear` or `/keepgear status`
+* **Output**:
+  ```text
+  [Vanilla Outsider: Keep Gear Status]
+    Master Enabled: true
+    Armor: true | Weapons: true | Tools: true
+    Shields: true | Elytra: true | Containers: false
+    Penalty: 10.0% | Echo Shard: true
+  ```
 
-#### Blacklist (Items never kept)
+### 2. `/keepgear help`
+Lists available subcommands with brief syntax hints.
+* **Syntax**: `/keepgear help`
 
-* `/keepgear blacklist list` - Show all blacklisted items.
-* `/keepgear blacklist add <item_id>` - Add an item (e.g. `minecraft:cobblestone`).
-* `/keepgear blacklist remove <item_id>` - Remove an item.
-* `/keepgear blacklist clear` - Remove ALL items from blacklist.
+### 3. `/keepgear reload`
+Reloads the configuration directly from disk (`config/vanilla-outsider-keep-gear.json`).
+* **Requirement**: Gamemaster Level 2+
+* **Syntax**: `/keepgear reload`
+* **Response**: `Keep Gear configuration reloaded from disk.`
 
-#### Whitelist (Items always kept)
+### 4. `/keepgear reset`
+Resets the configuration to default factory values and immediately persists it to disk.
+* **Requirement**: Gamemaster Level 2+
+* **Syntax**: `/keepgear reset`
+* **Response**: `Keep Gear configuration reset to defaults.`
 
-* `/keepgear whitelist list` - Show all whitelisted items.
-* `/keepgear whitelist add <item_id>` - Add an item.
-* `/keepgear whitelist remove <item_id>` - Remove an item.
-* `/keepgear whitelist clear` - Clear the whitelist.
+### 5. `/keepgear set <property> <value>`
+Dynamically updates a configuration value at runtime and saves it to disk without server restart.
+* **Requirement**: Gamemaster Level 2+
+* **Available Properties**:
+  * `enabled <true|false>`: Master switch.
+  * `keepArmor <true|false>`: Armor category preservation.
+  * `keepWeapons <true|false>`: Weapons category preservation.
+  * `keepTools <true|false>`: Tools category preservation.
+  * `keepContainers <true|false>`: Storage containers toggle.
+  * `penaltyPercent <0.0 .. 100.0>`: Base durability wear percentage.
+  * `useEchoShard <true|false>`: Echo Shard insurance toggle.
 
-### Dimension Control
-
-Disable the mod entirely in specific dimensions (e.g., make the End truly dangerous).
-
-* `/keepgear dimension list` - Show dimensions where mod is DISABLED.
-* `/keepgear dimension disable <dimension_id>` - Disable mod in a dimension (e.g. `minecraft:the_end`).
-* `/keepgear dimension enable <dimension_id>` - Re-enable mod in a dimension.
-
-## 🔐 Permissions
-
-The mod uses standard Minecraft command permissions.
-
-* **Default Requirement:** OP Level 2 (Command Block / Cheat level) or higher is usually required for management commands (`reload`, `add`, `remove`).
-* **Status/Help:** Accessible to all players (depending on server config).
+#### Examples:
+```mcfunction
+/keepgear set enabled true
+/keepgear set penaltyPercent 15.0
+/keepgear set keepContainers true
+/keepgear set useEchoShard false
+```
