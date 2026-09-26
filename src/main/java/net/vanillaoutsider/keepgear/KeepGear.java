@@ -1,6 +1,8 @@
 // Copyright (C) 2026 Dasik (Rifaditya) | GNU GPLv3
 package net.vanillaoutsider.keepgear;
 
+import net.dasik.social.api.SocialLinks;
+import net.dasik.social.api.config.DasikSupportHelper;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.command.v2.CommandRegistrationCallback;
 import net.vanillaoutsider.keepgear.command.KeepGearCommands;
@@ -26,7 +28,7 @@ public final class KeepGear implements ModInitializer {
             KeepGearCommands.register(dispatcher);
         });
 
-        LOGGER.info("Vanilla Outsider: Keep Gear 26.3 initialized!");
+        LOGGER.info("Keep Gear initialized! Community: {}, Support: {}", SocialLinks.DISCORD_INVITE_URL, DasikSupportHelper.KOFI_URL);
     }
 
     public static net.vanillaoutsider.keepgear.config.KeepGearConfig getConfig() {

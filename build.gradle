@@ -15,6 +15,9 @@ repositories {
 	maven { url = "https://maven.fabricmc.net/" }
 	maven { url = "https://maven.terraformersmc.com/" }
 	maven { url = "https://maven.isxander.dev/releases" }
+	flatDir {
+		dirs 'e:/Minecraft Project/DasikLibrary-Rebuilt/Archive/builds'
+	}
 	mavenCentral()
 }
 
@@ -22,6 +25,9 @@ dependencies {
 	minecraft "com.mojang:minecraft:${project.minecraft_version}"
 	implementation "net.fabricmc:fabric-loader:${project.fabric_loader_version}"
 	implementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_version}"
+
+	// Universal Dasik Library
+	implementation "net.dasik.social:dasik-library:1.9.2"
 
 	// Optional GUI Dependencies (compileOnly: zero runtime bloat, zero server crashes)
 	compileOnly "dev.isxander:yet-another-config-lib:3.9.5+26.2-fabric"
@@ -74,10 +80,13 @@ afterEvaluate {
 	if (targetJarTask != null) {
 		def archiveTask = tasks.register('archiveReleaseJar') {
 			group = 'build'
-			description = 'Copies release JAR to local Archive and Central Release Hub'
+			description = 'Copies release JAR to local Archive, Central Release Hub, External Vault, and Modrinth profile'
 			dependsOn targetJarTask
 			doLast {
 				def jarFile = targetJarTask.archiveFile.get().asFile
+				if (!jarFile.exists()) {
+					jarFile = file("build/libs/${project.archives_base_name}-${project.mod_version}.jar")
+				}
 				if (jarFile.exists()) {
 					// 1. Mod Local Archive
 					def mcVer = project.findProperty('minecraft_version') ?: ''
@@ -113,6 +122,32 @@ afterEvaluate {
 								println "[HUB-ARCHIVE] Note: Could not copy to release hub: ${e.message}"
 							}
 						}
+					}
+
+					// 3. External Vault Archive
+					File vaultDir = new File("D:/Minecraft Mod Archive Jars/Keep Gear")
+					if (vaultDir.exists() || vaultDir.mkdirs()) {
+						copy {
+							from jarFile
+							into vaultDir
+						}
+						println "[VAULT-ARCHIVE] Successfully copied ${jarFile.name} to vault: ${vaultDir.canonicalPath}"
+					}
+
+					// 4. Modrinth Test Profile
+					File modrinthProfile = new File("C:/Users/fmrif/AppData/Roaming/ModrinthApp/profiles/26.3/mods")
+					if (modrinthProfile.exists()) {
+						modrinthProfile.listFiles()?.each { f ->
+							if (f.name.startsWith(project.archives_base_name) && f.name.endsWith(".jar") && f.name != jarFile.name) {
+								f.delete()
+								println "[MODRINTH-PROFILE] Purged old version: ${f.name}"
+							}
+						}
+						copy {
+							from jarFile
+							into modrinthProfile
+						}
+						println "[MODRINTH-PROFILE] Successfully deployed ${jarFile.name} to launcher profile"
 					}
 				}
 			}

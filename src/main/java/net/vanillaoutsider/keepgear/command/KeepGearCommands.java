@@ -8,6 +8,7 @@ import net.minecraft.ChatFormatting;
 import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.commands.Commands;
 import net.minecraft.network.chat.Component;
+import net.dasik.social.api.config.DasikSupportHelper;
 import net.vanillaoutsider.keepgear.KeepGear;
 import net.vanillaoutsider.keepgear.config.ConfigManager;
 import net.vanillaoutsider.keepgear.config.KeepGearConfig;
@@ -98,6 +99,7 @@ public final class KeepGearCommands {
         source.sendSuccess(() -> Component.literal("  Armor: " + c.keepArmor + " | Weapons: " + c.keepWeapons + " | Tools: " + c.keepTools), false);
         source.sendSuccess(() -> Component.literal("  Shields: " + c.keepShields + " | Elytra: " + c.keepElytra + " | Containers: " + c.keepContainers), false);
         source.sendSuccess(() -> Component.literal("  Penalty: " + (c.penaltyEnabled ? (c.penaltyPercent + "%") : "Disabled") + " | Echo Shard: " + c.useEchoShard), false);
+        source.sendSuccess(() -> DasikSupportHelper.getCommandFooter(), false);
         return 1;
     }
 
@@ -107,6 +109,7 @@ public final class KeepGearCommands {
         source.sendSuccess(() -> Component.literal("/keepgear set <property> <value> - Update setting"), false);
         source.sendSuccess(() -> Component.literal("/keepgear reset - Restore defaults"), false);
         source.sendSuccess(() -> Component.literal("/keepgear reload - Reload config from disk"), false);
+        source.sendSuccess(() -> DasikSupportHelper.getCommandFooter(), false);
         return 1;
     }
 

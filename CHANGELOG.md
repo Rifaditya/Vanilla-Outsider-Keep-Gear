@@ -2,6 +2,15 @@
 
 All notable changes to **Vanilla Outsider: Keep Gear** will be documented in this file.
 
+## [1.2.5+26.3]
+### Added
+- Integrated universal **Dasik Library** (`>=1.9.0`) runtime dependency.
+- Integrated official Dasik community Discord and Ko-fi creator support links in `/keepgear status` and `/keepgear help` command footers via `DasikSupportHelper`.
+- Added startup log reporting official community and creator support endpoints.
+- Added `KeepGearSupport` utility providing streamlined access to Dasik Library social endpoints.
+- Configured ModMenu links for donation and Discord community in `fabric.mod.json`.
+- Comprehensive automated JUnit 5 test coverage for Dasik Library integration and endpoint resolution.
+
 ## [1.2.4+26.3]
 ### Added
 - Complete in-game Brigadier command suite `/keepgear` (`status`, `help`, `set <property> <value>`, `reset`, `reload`) with permission gating (`Commands.LEVEL_GAMEMASTERS`).

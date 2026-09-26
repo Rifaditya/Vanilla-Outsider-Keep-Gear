@@ -9,6 +9,7 @@ import net.minecraft.network.protocol.game.ClientboundSoundPacket;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
+import net.minecraft.util.Prediction;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.item.ItemStack;
@@ -73,12 +74,12 @@ public abstract class ServerPlayerRespawnMixin implements KeepGearPlayerBridge {
                     inventory.setItem(slot, stack);
                 } else {
                     if (!inventory.add(stack)) {
-                        newPlayer.drop(stack, false);
+                        newPlayer.drop(stack, false, Prediction.PREDICTED);
                     }
                 }
             } else {
                 if (!inventory.add(stack)) {
-                    newPlayer.drop(stack, false);
+                    newPlayer.drop(stack, false, Prediction.PREDICTED);
                 }
             }
         }
@@ -94,7 +95,7 @@ public abstract class ServerPlayerRespawnMixin implements KeepGearPlayerBridge {
             } else {
                 // Safe fallback per Grill-Me: if slot occupied, place in main inventory or drop at feet
                 if (!inventory.add(stack)) {
-                    newPlayer.drop(stack, false);
+                    newPlayer.drop(stack, false, Prediction.PREDICTED);
                 }
             }
         }

@@ -1,5 +1,6 @@
 # Release Queue
 
+- [ ] **`1.2.5+26.3`** (2026-09-24) - Dasik Library Integration
 - [ ] **`1.2.4+26.3`** - In-game `/keepgear` Brigadier command suite & optional Trinkets compatibility.
 - [ ] **`1.2.3+26.3`** - Player death interception, safe respawn restoration, and XP HUD sync.
 - [ ] **`1.2.2+26.3`** - Item preservation engine, durability degradation, and Echo Shard insurance.

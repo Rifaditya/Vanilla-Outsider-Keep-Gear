@@ -3,7 +3,10 @@ package net.vanillaoutsider.keepgear;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import net.dasik.social.api.SocialLinks;
+import net.dasik.social.api.config.DasikSupportHelper;
 import net.vanillaoutsider.keepgear.config.KeepGearConfig;
+import net.vanillaoutsider.keepgear.util.KeepGearSupport;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -40,6 +43,24 @@ public class KeepGearConfigTest {
         assertNotNull(config.containerWhitelist);
         assertTrue(config.containerWhitelist.contains("minecraft:shulker_box"));
         assertTrue(config.containerWhitelist.contains("minecraft:bundle"));
+    }
+
+    @Test
+    void testDasikSupportUrls() {
+        assertNotNull(SocialLinks.DISCORD_INVITE_URL);
+        assertFalse(SocialLinks.DISCORD_INVITE_URL.isEmpty());
+        assertTrue(SocialLinks.DISCORD_INVITE_URL.contains("discord"));
+
+        assertNotNull(DasikSupportHelper.KOFI_URL);
+        assertFalse(DasikSupportHelper.KOFI_URL.isEmpty());
+        assertTrue(DasikSupportHelper.KOFI_URL.contains("ko-fi.com"));
+
+        assertEquals(SocialLinks.DISCORD_INVITE_URL, KeepGearSupport.getDiscordUrl());
+        assertEquals(DasikSupportHelper.KOFI_URL, KeepGearSupport.getKofiUrl());
+        assertNotNull(KeepGearSupport.getDiscordUri());
+        assertNotNull(KeepGearSupport.getKofiUri());
+        assertEquals("https://discord.gg/EV99bgAFqb", KeepGearSupport.getDiscordUrl());
+        assertEquals("https://ko-fi.com/dasikigaijin", KeepGearSupport.getKofiUrl());
     }
 
     @Test
