@@ -23,3 +23,8 @@ logs/
 # OS
 .DS_Store
 Thumbs.db
+
+# Logging and archives
+Archive/
+Archive Jar of all versions/
+*.jar
