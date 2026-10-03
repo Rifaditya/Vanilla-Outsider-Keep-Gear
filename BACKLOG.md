@@ -6,9 +6,7 @@ This file tracks planned features, technical refinements, performance optimizati
 
 ## 📊 Backlog Summary
 
-| ID | Category | Title | Priority | Target Version | Status |
-| :--- | :--- | :--- | :--- | :--- | :--- |
-| `[BL-KG-001]` | `[TECH_DEBT]` | Update Keep Gear MC 26.x to use Dasik Library MC 26.x | `[MEDIUM]` | `26.x` | `✅ RESOLVED` |
+*No active backlog items*
 
 ---
 
@@ -21,21 +19,4 @@ This file tracks planned features, technical refinements, performance optimizati
 
 ## 📝 Detailed Backlog Entries
 
-### [BL-KG-001] Update Keep Gear MC 26.x to use Dasik Library MC 26.x
-- **Category**: `[TECH_DEBT]`
-- **Priority**: `[MEDIUM]`
-- **Status**: `✅ RESOLVED`
-- **Target Component(s)**: `build.gradle`, `fabric.mod.json`, dynamic gamerules, creator support
-- **Date Added**: 2026-09-24
-
-#### ❓ Problem / Context
-Keep Gear does not declare `dasik-library` as a runtime dependency.
-
-#### 💡 Proposed Solution & Technical Specifications
-- Add `dasik-library` dependency in `build.gradle` and `fabric.mod.json`.
-- Wire `net.dasik.social.api.*` for dynamic gamerules and creator support links.
-
-#### 🧪 Verification & Acceptance Criteria
-- [x] `./gradlew check` / test suite passes.
-- [x] Mod compiles cleanly with `./gradlew build`.
-- [x] Built JAR is triple-archived (4-point distribution).
+*(All queued tasks resolved and archived in History.md and RELEASE_QUEUE.md)*
