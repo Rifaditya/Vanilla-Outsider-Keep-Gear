@@ -14,10 +14,17 @@ import java.nio.charset.StandardCharsets;
 
 public final class ConfigManager {
     private static final Gson GSON = new GsonBuilder().setPrettyPrinting().create();
-    private static final File CONFIG_FILE = new File(
-        FabricLoader.getInstance().getConfigDir().toFile(),
-        "vanilla-outsider-keep-gear.json"
-    );
+    private static final File CONFIG_FILE = resolveConfigFile();
+
+    private static File resolveConfigFile() {
+        try {
+            if (FabricLoader.getInstance() != null && FabricLoader.getInstance().getConfigDir() != null) {
+                return new File(FabricLoader.getInstance().getConfigDir().toFile(), "vanilla-outsider-keep-gear.json");
+            }
+        } catch (Throwable ignored) {
+        }
+        return new File("config/vanilla-outsider-keep-gear.json");
+    }
 
     private static KeepGearConfig config = new KeepGearConfig();
 

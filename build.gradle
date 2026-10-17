@@ -27,7 +27,7 @@ dependencies {
 	implementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_version}"
 
 	// Universal Dasik Library
-	implementation "net.dasik.social:dasik-library:1.9.2"
+	implementation "net.dasik.social:dasik-library:${project.dasik_library_version}"
 
 	// Optional GUI Dependencies (compileOnly: zero runtime bloat, zero server crashes)
 	compileOnly "dev.isxander:yet-another-config-lib:3.9.5+26.2-fabric"

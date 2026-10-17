@@ -28,3 +28,9 @@ Thumbs.db
 Archive/
 Archive Jar of all versions/
 *.jar
+
+# Runtime environments & caches
+run/
+config/
+__pycache__/
+*.pyc

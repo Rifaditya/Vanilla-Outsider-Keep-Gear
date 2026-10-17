@@ -2,6 +2,12 @@
 
 All notable changes to **Vanilla Outsider: Keep Gear** will be documented in this file.
 
+## [1.2.6+26.3] - 2026-10-17
+### Changed
+- Migrated in-game Brigadier command suite to Universal Brigadier Command Framework (`net.dasik.social.api.command.*`).
+- Added interactive `/keepgear help` cheatsheet with clickable command suggestions and support links.
+- Upgraded DasikLibrary dependency to 1.11.2.
+
 ## [1.2.5+26.3]
 ### Added
 - Integrated universal **Dasik Library** (`>=1.9.0`) runtime dependency.

@@ -4,7 +4,6 @@ package net.vanillaoutsider.keepgear;
 import net.dasik.social.api.SocialLinks;
 import net.dasik.social.api.config.DasikSupportHelper;
 import net.fabricmc.api.ModInitializer;
-import net.fabricmc.fabric.api.command.v2.CommandRegistrationCallback;
 import net.vanillaoutsider.keepgear.command.KeepGearCommands;
 import net.vanillaoutsider.keepgear.compat.TrinketsCompat;
 import net.vanillaoutsider.keepgear.config.ConfigManager;
@@ -23,10 +22,8 @@ public final class KeepGear implements ModInitializer {
         // Check optional Trinkets compatibility
         TrinketsCompat.isLoaded();
 
-        // Register Brigadier command suite
-        CommandRegistrationCallback.EVENT.register((dispatcher, registryAccess, environment) -> {
-            KeepGearCommands.register(dispatcher);
-        });
+        // Register Brigadier command suite via Universal Command Framework
+        KeepGearCommands.init();
 
         LOGGER.info("Keep Gear initialized! Community: {}, Support: {}", SocialLinks.DISCORD_INVITE_URL, DasikSupportHelper.KOFI_URL);
     }
