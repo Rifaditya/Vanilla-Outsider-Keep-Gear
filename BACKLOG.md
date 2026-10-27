@@ -1,5 +1,10 @@
 # 📌 Keep Gear Backlog
 
+> [!NOTE]
+> **Project Status: 💤 SHELVED / INCUBATING PROTOTYPE**
+> This project is currently shelved as an incubating prototype with no public distribution or active multi-era anchor obligations. Backlog tickets are preserved for future reference.
+
+
 <!-- Highest Historical ID: BL-KG-004 (Next Ticket Must Start at BL-KG-005) -->
 > **Next Available Ticket ID**: `[BL-KG-005]`
 
@@ -11,15 +16,14 @@ This file tracks planned features, technical refinements, performance optimizati
 
 | ID | Category | Title | Priority | Target Version | Status | Specification |
 | :--- | :--- | :--- | :--- | :--- | :--- | :--- |
-| [`BL-KG-003`](tickets/BL-KG-003.md) | `[TECH_DEBT]` | Adopt 5-Pillar Testing & Sidedness Verification Harness | `[MEDIUM]` | All Anchors | 📌 DEFERRED | [View Ticket](tickets/BL-KG-003.md) |
-| [`BL-KG-004`](tickets/BL-KG-004.md) | `[TECH_DEBT]` | Migrate Command Suite to Universal Brigadier Command Framework | `[MEDIUM]` | All Anchors | `✅ RESOLVED` | [View Ticket](tickets/BL-KG-004.md) |
+| [`BL-KG-003`](tickets/BL-KG-003.md) | `[TECH_DEBT]` | Adopt 5-Pillar Testing & Sidedness Verification Harness | `[MEDIUM]` | All Anchors | 💤 SHELVED | [View Ticket](tickets/BL-KG-003.md) |
 
 ---
 
 ## 🏷 Legend & Status Tags
 - **Categories**: `[FEATURE]`, `[REFINEMENT]`, `[BUGFIX]`, `[PERF]`, `[TECH_DEBT]`
 - **Priorities**: `[HIGH]` (Important logic fix/enhancement), `[MEDIUM]` (Quality of life), `[LOW]` (Minor polish)
-- **Statuses**: `📌 DEFERRED` (Queued for future work), `🚧 IN_PROGRESS` (Active development), `✅ RESOLVED` (Implemented and verified)
+- **Statuses**: `💤 SHELVED` (Queued for future work), `💤 SHELVED` (Active development), `✅ RESOLVED` (Implemented and verified)
 
 ---
 
