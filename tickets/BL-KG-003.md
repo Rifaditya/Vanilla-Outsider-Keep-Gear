@@ -4,7 +4,7 @@
 - **Category**: `[TECH_DEBT]`
 - **Priority**: `[MEDIUM]`
 - **Scope**: `All Anchors` (`1.20.1`, `1.21.1`, `1.21.11`, `26.1`, `26.2`, `26.3`)
-- **Status**: `📌 DEFERRED`
+- **Status**: `💤 SHELVED`
 - **Target Repository / Root**: `Vanilla Outsider Collections\Keep Gear`
 
 ---
