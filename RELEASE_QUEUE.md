@@ -1,5 +1,6 @@
 # Release Queue
 
+- [ ] **`1.2.6+26.x`** (2026-10-30) - Scaffold Anchor 7: Keep Gear v26.x rolling 26.3+ sovereign lead (BL-KG-005).
 - [ ] **`1.2.6+26.3`** (2026-10-17) - Universal Brigadier Command Framework migration.
 - [ ] **`1.2.5+26.3`** (2026-09-24) - Dasik Library Integration
 - [ ] **`1.2.4+26.3`** - In-game `/keepgear` Brigadier command suite & optional Trinkets compatibility.

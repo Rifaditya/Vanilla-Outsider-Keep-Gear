@@ -5,8 +5,8 @@
 > This project is currently shelved as an incubating prototype with no public distribution or active multi-era anchor obligations. Backlog tickets are preserved for future reference.
 
 
-<!-- Highest Historical ID: BL-KG-004 (Next Ticket Must Start at BL-KG-005) -->
-> **Next Available Ticket ID**: `[BL-KG-005]`
+<!-- Highest Historical ID: BL-KG-005 (Next Ticket Must Start at BL-KG-006) -->
+> **Next Available Ticket ID**: `[BL-KG-006]`
 
 This file tracks planned features, technical refinements, performance optimizations, and deferred bug fixes for **Keep Gear**.
 
@@ -16,6 +16,7 @@ This file tracks planned features, technical refinements, performance optimizati
 
 | ID | Category | Title | Priority | Target Version | Status | Specification |
 | :--- | :--- | :--- | :--- | :--- | :--- | :--- |
+| [`BL-KG-005`](tickets/BL-KG-005.md) | `[TECH_DEBT]` | Scaffold Anchor 7: Keep Gear v26.x (rolling 26.3+) | `[HIGH]` | Multi-Version Parity | `✅ RESOLVED` | [View Ticket](tickets/BL-KG-005.md) |
 | [`BL-KG-003`](tickets/BL-KG-003.md) | `[TECH_DEBT]` | Adopt 5-Pillar Testing & Sidedness Verification Harness | `[MEDIUM]` | All Anchors | 💤 SHELVED | [View Ticket](tickets/BL-KG-003.md) |
 
 ---

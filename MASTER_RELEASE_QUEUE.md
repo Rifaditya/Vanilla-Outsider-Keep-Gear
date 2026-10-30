@@ -10,7 +10,8 @@
 
 | Target MC | Generational Era | Live on Platforms | Next Queued Version | Status & Cadence Action | Feature Highlights / Notes |
 | :--- | :--- | :--- | :--- | :--- | :--- |
-| **MC 26.3** | Modern Lead | — | `1.2.5+26.3` | 🚀 **Ready for Release** | Complete Keep Gear suite: durability preservation, degradation mechanics, Echo Shard insurance, `/keepgear` Brigadier command suite & optional Trinkets compatibility. |
+| **MC 26.x** | Modern Sovereign Rolling | — | `1.2.6+26.x` | 🚀 **Ready for Release** | Forward-compatible rolling build for Minecraft 26.3+ sovereign lead runtimes. |
+| **MC 26.3** | Modern Lead | — | `1.2.6+26.3` | 🚀 **Ready for Release** | Complete Keep Gear suite: durability preservation, degradation mechanics, Echo Shard insurance, `/keepgear` Brigadier command suite & optional Trinkets compatibility. |
 
 ---
 
@@ -35,6 +36,7 @@
 
 ## 🛠️ Dedicated Subproject Release Queues
 
+- [MC 26.x Release Queue](file:///E:/Minecraft%20Project/Vanilla%20Outsider%20Collections/Keep%20Gear/Keep%20Gear%20v26.x/RELEASE_QUEUE.md)
 - [MC 26.3 Release Queue](file:///E:/Minecraft%20Project/Vanilla%20Outsider%20Collections/Keep%20Gear/RELEASE_QUEUE.md)
 
 ---
