@@ -2,14 +2,14 @@
 
 Welcome to the central documentation hub for **Keep Gear**. This project follows the **Zenith Protocol v2.1** documentation standard.
 
-## ?? Navigation
+## 📌 Navigation
 
 ### [Core Concepts](Concept/)
 *   **[Original Design Document](Concept/concept_keep_gear.md)**
 
 ### [Development](Develop/)
 *   **[Architecture](Develop/Architecture/)**
-*   **[Changelogs](Develop/Changelogs/History.md)**
+*   **[Changelogs](Develop/Changelogs/)**
 *   **[Audit Logs](Develop/Audit/)**
 
 ### [Player Guide](Players/)
@@ -18,7 +18,7 @@ Welcome to the central documentation hub for **Keep Gear**. This project follows
 
 ---
 
-## ??? Media & Assets
+## 🖼️ Media & Assets
 *   Explore the **[Media folder](Media/)**
 
 ---
